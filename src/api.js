@@ -2,7 +2,7 @@ import axios from "axios"
 import { jwtDecode } from "jwt-decode"
 
 
-export const BASE_URL = import.meta.env.VITE_BASE_URL
+export const BASE_URL = https://smart-blog-backend-1.onrender.com
 
 const api = axios.create({
     baseURL: BASE_URL
