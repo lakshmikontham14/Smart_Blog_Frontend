@@ -19,7 +19,7 @@ const BlogFilter = ({ searchTerm, onSearch, onCategoryChange }) => { // Receive 
   };
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-center gap-4 bg-card dark:bg-card-foreground">
+    <div className="w-full px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-center gap-4 bg-card dark:bg-card-foreground">
       <div className="flex w-full md:w-1/2 gap-4">
         <Input
           type="text"

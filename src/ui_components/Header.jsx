@@ -13,17 +13,17 @@ const Header = () => {
 
   return (
     <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 relative">
-      <div className="w-[1400px] h-[600px] overflow-hidden rounded-xl shadow-md mx-auto">
+      <div className="w-full h-[250px] sm:h-[350px] md:h-[450px] lg:h-[550px] xl:h-[600px] overflow-hidden rounded-xl shadow-md mx-auto">
         <Carousel
           showArrows={true}
           infiniteLoop={true}
           autoPlay={true}
-          interval={5000}
+          interval={3000}
           showThumbs={false}
           showStatus={false}
         >
           {images.map((image, index) => (
-            <div key={index} className="h-[600px]">
+            <div key={index} className="h-full">
               <img src={image} alt={`Slide ${index}`} className="w-full h-full object-cover" />
             </div>
           ))}

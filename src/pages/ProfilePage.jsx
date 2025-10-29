@@ -30,9 +30,9 @@ const ProfilePage = ({ authUsername }) => {
   }
 
   return (
-    <div className="py-12 md:py-16">
+    <div className="py-12 md:py-16 w-full">
       <Hero userInfo={data} authUsername={authUsername} toggleModal={toggleModal} />
-      <BlogContainer blogs={blogs} title={`🍔 ${username}'s Posts`} />
+      <BlogContainer blogs={blogs} title={`${username}'s Posts`} />
 
       {showModal && (
         <Modal toggleModal={toggleModal}>

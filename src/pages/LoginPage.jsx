@@ -28,7 +28,7 @@ const LoginPage = ({setIsAuthenticated, setUsername}) => {
 
     },
     onError: (err) => {
-      toast.error(err.message);
+      toast.error("Login failed. Please check your username and password.");
     },
   });
 

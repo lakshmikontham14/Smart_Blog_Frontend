@@ -103,8 +103,8 @@ const CreatePostPage = ({ blog, isAuthenticated }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className={`container mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col items-center gap-6 w-full max-w-lg rounded-xl 
-      bg-white dark:bg-[#1f1f1f] text-gray-900 dark:text-gray-100 shadow-lg border border-gray-200 dark:border-gray-700 
+      className={`my-6 px-6 py-4 flex flex-col items-center gap-2 w-full max-w-xl mx-auto rounded-2xl 
+      bg-white dark:bg-[#1f1f1f] text-gray-900 dark:text-gray-100 shadow-xl border border-gray-200 dark:border-gray-700 
       transition-colors duration-300 ${blog ? "h-auto overflow-auto" : ""}`}
     >
       {/* Header */}
@@ -175,7 +175,7 @@ const CreatePostPage = ({ blog, isAuthenticated }) => {
         >
           {isGenerating ? (
             <>
-              <SmallSpinner /> <SmallSpinnerText text="Generating..." />
+              <SmallSpinner /> <SmallSpinnerText text="Generating..." className="text-gray-800 dark:text-gray-100" />
             </>
           ) : (
             <SmallSpinnerText text="Generate Description with AI" />
@@ -245,7 +245,7 @@ const CreatePostPage = ({ blog, isAuthenticated }) => {
           >
             {updateMutation.isPending ? (
               <>
-                <SmallSpinner /> <SmallSpinnerText text="Updating post..." />
+                <SmallSpinner /> <SmallSpinnerText text="Updating post..." className="text-white" />
               </>
             ) : (
               <SmallSpinnerText text="Update post" />
@@ -254,13 +254,13 @@ const CreatePostPage = ({ blog, isAuthenticated }) => {
         ) : (
           <button
             disabled={mutation.isPending}
-            className="w-full inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium 
-            bg-green-600 dark:bg-green-500 text-white hover:bg-green-700 dark:hover:bg-green-600 shadow-md 
+            className="w-full inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium             
+            shadow-md 
             h-10 px-4 py-2 transition-colors duration-300"
           >
             {mutation.isPending ? (
               <>
-                <SmallSpinner /> <SmallSpinnerText text="Creating post..." />
+                <SmallSpinner /> <SmallSpinnerText text="Creating post..." className="text-white" />
               </>
             ) : (
               <SmallSpinnerText text="Create post" />
