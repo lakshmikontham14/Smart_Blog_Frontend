@@ -13,6 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 import NotFoundPage from "./pages/NotFoundPage";
 import AllBlogsPage from "./pages/AllBlogsPage";
 import EditPostWrapper from "./ui_components/EditPostWrapper";
+import { ThemeProvider } from "./lib/ThemeContext";
 
 const App = () => {
   const [username, setUsername] = useState(null);
@@ -34,53 +35,55 @@ const App = () => {
   );
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <AppLayout
-              isAuthenticated={isAuthenticated}
-              username={username}
-              setUsername={setUsername}
-              setIsAuthenticated={setIsAuthenticated}
-            />
-          }
-        >
-          <Route index element={<HomePage />} />
-          <Route path="/all-blogs" element={<AllBlogsPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-          <Route path="profile/:username" element={<ProfilePage authUsername={username} />} />
-          <Route path="blogs/:slug" element={<DetailPage username={username} isAuthenticated={isAuthenticated} />} />
+    <ThemeProvider>
+      <BrowserRouter>
+        <Routes>
           <Route
-            path="edit-post/:slug"
+            path="/"
             element={
-              <ProtectedRoute>
-                <EditPostWrapper isAuthenticated={isAuthenticated} />
-              </ProtectedRoute>
+              <AppLayout
+                isAuthenticated={isAuthenticated}
+                username={username}
+                setUsername={setUsername}
+                setIsAuthenticated={setIsAuthenticated}
+              />
+            }
+          >
+            <Route index element={<HomePage isAuthenticated={isAuthenticated} />} />
+            <Route path="/all-blogs" element={<AllBlogsPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+            <Route path="profile/:username" element={<ProfilePage authUsername={username} />} />
+            <Route path="blogs/:slug" element={<DetailPage username={username} isAuthenticated={isAuthenticated} />} />
+            <Route
+              path="edit-post/:slug"
+              element={
+                <ProtectedRoute>
+                  <EditPostWrapper isAuthenticated={isAuthenticated} />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="create"
+              element={
+                <ProtectedRoute>
+                  <CreatePostPage isAuthenticated={isAuthenticated} />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
+          <Route path="/signup" element={<SignupPage />} />
+          <Route
+            path="/signin"
+            element={
+              <LoginPage
+                setIsAuthenticated={setIsAuthenticated}
+                setUsername={setUsername}
+              />
             }
           />
-          <Route
-            path="create"
-            element={
-              <ProtectedRoute>
-                <CreatePostPage isAuthenticated={isAuthenticated} />
-              </ProtectedRoute>
-            }
-          />
-        </Route>
-        <Route path="/signup" element={<SignupPage />} />
-        <Route
-          path="/signin"
-          element={
-            <LoginPage
-              setIsAuthenticated={setIsAuthenticated}
-              setUsername={setUsername}
-            />
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 };
 

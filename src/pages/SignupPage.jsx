@@ -84,7 +84,8 @@ const SignupPage = ({ userInfo, updateForm, toggleModal }) => {
         {/* Left Section - Image Side */}
         <div className="hidden lg:flex w-1/2 bg-gradient-to-br from-[#0a0a2a] to-[#0a0a2a] p-8 items-center justify-center flex-col text-white">
           <div className="text-left w-full">
-            <h2 className="text-2xl font-bold mb-2">BALA.</h2>
+            <h2 className="text-2xl font-bold mb-2">DevScribe
+            </h2>
           </div>
           <div className="flex flex-col items-center justify-center h-full">
             <h1 className="text-5xl italic font-bold mb-4">Create an account</h1>

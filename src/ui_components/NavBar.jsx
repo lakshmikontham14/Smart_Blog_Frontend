@@ -1,24 +1,26 @@
-import { FaHamburger } from "react-icons/fa";
 import ResponsiveNavBar from "./ResponsiveNavBar";
 import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { Sun, Moon } from "lucide-react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Sun, Moon, Menu } from "lucide-react";
+import { useContext } from "react";
+import { ThemeContext } from "../lib/ThemeContext";
 
 const NavBar = ({
-  darkMode,
-  handleDarkMode,
   isAuthenticated,
   username,
   setIsAuthenticated,
   setUsername,
 }) => {
   const [showNavBar, setShowNavBar] = useState(false);
+  const { darkMode, handleDarkMode } = useContext(ThemeContext);
+  const navigate = useNavigate();
 
   function logout() {
     localStorage.removeItem("access");
     localStorage.removeItem("refresh");
     setIsAuthenticated(false);
     setUsername(null);
+    navigate("/");
   }
 
   return (
@@ -80,7 +82,7 @@ const NavBar = ({
           >
             {darkMode ? <Sun className="h-6 w-6" /> : <Moon className="h-6 w-6" />}
           </button>
-          <FaHamburger
+          <Menu
             className="text-2xl cursor-pointer hidden max-md:block text-white dark:text-white hover:text-[#E0E0E0] dark:hover:text-[#F0F0F0]"
             onClick={() => setShowNavBar((curr) => !curr)}
           />

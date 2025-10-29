@@ -66,33 +66,33 @@ const DetailPage = ({ username, isAuthenticated }) => {
   }
 
   return (
-    <div className="py-12 md:py-16">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+    <div className="py-16 bg-white dark:bg-gray-950">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-8 border-t border-b border-gray-200 dark:border-gray-700 py-12">
         <Badge blog={blog} />
 
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mt-6">
-          <h2 className="text-3xl md:text-4xl font-bold leading-tight text-foreground dark:text-primary-foreground">
+          <h2 className="text-4xl md:text-5xl font-extrabold leading-tight text-gray-900 dark:text-white">
             {blog.title}
           </h2>
 
           {isAuthenticated && username === blog.author.username && (
             <span className="flex items-center gap-4 mt-4 md:mt-0">
-              <HiPencilAlt onClick={() => navigate(`/edit-post/${blog.slug}`)} className="text-2xl text-primary cursor-pointer hover:opacity-80 transition-opacity" />
-              <MdDelete onClick={handleDeleteBlog} className="text-2xl text-destructive cursor-pointer hover:opacity-80 transition-opacity" />
+              <HiPencilAlt onClick={() => navigate(`/edit-post/${blog.slug}`)} className="text-3xl text-blue-600 cursor-pointer hover:text-blue-700 transition-colors" />
+              <MdDelete onClick={handleDeleteBlog} className="text-3xl text-red-600 cursor-pointer hover:text-red-700 transition-colors" />
             </span>
           )}
         </div>
 
         <BlogWriter blog={blog} />
 
-        <div className="w-full h-80 md:h-96 my-8 overflow-hidden rounded-xl shadow-md">
+        <div className="w-full h-96 md:h-[500px] my-10 overflow-hidden rounded-xl shadow-xl border border-gray-200 dark:border-gray-700">
           <img
             className="w-full h-full object-cover rounded-xl"
             src={`${BASE_URL}${blog.featured_image}`}
             alt={blog.title}
           />
         </div>
-        <p className="text-base leading-relaxed text-muted-foreground dark:text-gray-300">
+        <p className="text-lg leading-relaxed text-gray-800 dark:text-gray-200 mb-8">
           {blog.content}
         </p>
       </div>

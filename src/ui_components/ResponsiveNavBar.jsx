@@ -1,7 +1,14 @@
 import { NavLink } from 'react-router-dom'
 import { Sun, Moon } from "lucide-react";
+import { useContext } from "react";
+import { ThemeContext } from "../lib/ThemeContext";
 
-const ResponsiveNavBar = ({isAuthenticated, username, logout, darkMode, handleDarkMode}) => {
+const ResponsiveNavBar = ({
+  isAuthenticated,
+  username,
+  logout,
+}) => {
+  const { darkMode, handleDarkMode } = useContext(ThemeContext);
   return (
     <nav className="bg-card dark:bg-background shadow-lg fixed inset-x-0 top-16 z-20 md:hidden py-4">
     <ul className="flex flex-col items-center justify-center gap-4 text-foreground dark:text-muted-foreground">

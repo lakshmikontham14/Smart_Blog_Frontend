@@ -10,11 +10,7 @@ const BlogContainer = ({isPending, blogs=[], title="Latest Posts"}) => {
   }
 
   return (
-    <section className="py-12 md:py-16">
-    <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 text-foreground dark:text-primary-foreground">
-      {title}
-    </h2>
-
+    <section className={blogs.length > 0 ? "py-12 md:py-16" : ""}>
     <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-8 justify-items-center">
       {blogs.slice(0, visibleBlogs).map((blog) => <BlogCard key={blog.id} blog={blog} />)}
       

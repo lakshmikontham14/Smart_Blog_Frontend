@@ -22,9 +22,7 @@ import LoginPage from "./LoginPage";
 
 const CreatePostPage = ({ blog, isAuthenticated }) => {
   const { register, handleSubmit, formState, setValue, getValues } = useForm({
-    defaultValues: blog ? blog : {
-      // description: "", // Removed description default value
-    },
+    defaultValues: blog ? blog : {},
   });
   const { errors } = formState;
   const navigate = useNavigate();
@@ -39,7 +37,6 @@ const CreatePostPage = ({ blog, isAuthenticated }) => {
       toast.success("Your post has been updated successfully!");
       console.log("Your post has been updated successfully!");
     },
-
     onError: (err) => {
       toast.error(err.message);
       console.log("Error updating blog", err);
@@ -53,6 +50,10 @@ const CreatePostPage = ({ blog, isAuthenticated }) => {
       queryClient.invalidateQueries({ queryKey: ["blogs"] });
       navigate("/");
     },
+    onError: (err) => {
+      toast.error(err.message);
+      console.log("Error creating blog", err);
+    },
   });
 
   function onSubmit(data) {
@@ -60,13 +61,13 @@ const CreatePostPage = ({ blog, isAuthenticated }) => {
     formData.append("title", data.title);
     formData.append("content", data.content);
     formData.append("category", data.category);
-    // formData.append("description", data.description); // Removed description from formData
 
     if (data.featured_image && data.featured_image[0]) {
       if (data.featured_image[0] != "/") {
         formData.append("featured_image", data.featured_image[0]);
       }
     }
+
     if (blog && blogID) {
       updateMutation.mutate({ data: formData, id: blogID });
     } else {
@@ -98,25 +99,29 @@ const CreatePostPage = ({ blog, isAuthenticated }) => {
     }
     generateDescription(title);
   }
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className={`container mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col items-center gap-6 w-full max-w-lg rounded-xl bg-card dark:bg-card-foreground text-card-foreground dark:text-card shadow-lg ${blog ? "h-auto overflow-auto" : ""}`}
+      className={`container mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col items-center gap-6 w-full max-w-lg rounded-xl 
+      bg-white dark:bg-[#1f1f1f] text-gray-900 dark:text-gray-100 shadow-lg border border-gray-200 dark:border-gray-700 
+      transition-colors duration-300 ${blog ? "h-auto overflow-auto" : ""}`}
     >
+      {/* Header */}
       <div className="flex flex-col gap-2 justify-center items-center mb-4">
-        <h3 className="font-bold text-3xl text-foreground dark:text-primary-foreground">
+        <h3 className="font-bold text-3xl text-gray-900 dark:text-gray-100">
           {blog ? "Update Post" : "Create Post"}
         </h3>
-
-        <p className="text-muted-foreground text-base text-center">
+        <p className="text-gray-600 dark:text-gray-400 text-base text-center">
           {blog
             ? "Do you want to update your post?"
             : "Create a new post and share your ideas."}
         </p>
       </div>
 
+      {/* Title */}
       <div className="w-full space-y-2">
-        <Label htmlFor="title" className="text-foreground dark:text-muted-foreground">
+        <Label htmlFor="title" className="text-gray-800 dark:text-gray-300">
           Title
         </Label>
         <Input
@@ -130,14 +135,18 @@ const CreatePostPage = ({ blog, isAuthenticated }) => {
             },
           })}
           placeholder="Give your post a title"
-          className="w-full"
+          className="w-full bg-gray-50 dark:bg-[#2a2a2a] border border-gray-300 dark:border-gray-600 
+          text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 rounded-lg 
+          focus:ring-2 focus:ring-primary focus:border-primary transition-colors duration-300"
         />
-
         {errors?.title?.message && <InputError error={errors.title.message} />}
       </div>
 
+      {/* Content */}
       <div className="w-full space-y-2">
-        <Label htmlFor="content" className="text-foreground dark:text-muted-foreground">Content</Label>
+        <Label htmlFor="content" className="text-gray-800 dark:text-gray-300">
+          Content
+        </Label>
         <Textarea
           id="content"
           placeholder="Write your blog post"
@@ -148,16 +157,21 @@ const CreatePostPage = ({ blog, isAuthenticated }) => {
               message: "The content must be at least 10 characters",
             },
           })}
-          className="w-full min-h-[180px]"
+          className="w-full min-h-[180px] bg-gray-50 dark:bg-[#2a2a2a] border border-gray-300 dark:border-gray-600 
+          text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 rounded-lg focus:ring-2 
+          focus:ring-primary focus:border-primary transition-colors duration-300"
         />
-        {errors?.content?.message && (
-          <InputError error={errors.content.message} />
-        )}
+        {errors?.content?.message && <InputError error={errors.content.message} />}
+
+        {/* AI Generate Button */}
         <button
           type="button"
           onClick={handleGenerateDescription}
           disabled={isGenerating}
-          className="w-full inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-secondary text-secondary-foreground shadow-md hover:bg-secondary/90 h-10 px-4 py-2 mt-2"
+          className="w-full inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium 
+          transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 
+          disabled:pointer-events-none disabled:opacity-50 bg-gray-200 dark:bg-[#3a3a3a] text-gray-800 dark:text-gray-100 
+          shadow-md hover:bg-gray-300 dark:hover:bg-[#4a4a4a] h-10 px-4 py-2 mt-2"
         >
           {isGenerating ? (
             <>
@@ -169,18 +183,23 @@ const CreatePostPage = ({ blog, isAuthenticated }) => {
         </button>
       </div>
 
+      {/* Category */}
       <div className="w-full space-y-2">
-        <Label htmlFor="category" className="text-foreground dark:text-muted-foreground">Category</Label>
-
+        <Label htmlFor="category" className="text-gray-800 dark:text-gray-300">
+          Category
+        </Label>
         <Select
           {...register("category", { required: "Blog's category is required" })}
           onValueChange={(value) => setValue("category", value)}
           defaultValue={blog ? blog.category : ""}
         >
-          <SelectTrigger className="w-full">
+          <SelectTrigger
+            className="w-full bg-gray-50 dark:bg-[#2a2a2a] text-gray-900 dark:text-gray-100 
+            border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary"
+          >
             <SelectValue placeholder="Select a category" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-white dark:bg-[#2a2a2a] text-gray-900 dark:text-gray-100">
             <SelectGroup>
               <SelectLabel>Categories</SelectLabel>
               <SelectItem value="Frontend">Frontend</SelectItem>
@@ -191,33 +210,38 @@ const CreatePostPage = ({ blog, isAuthenticated }) => {
             </SelectGroup>
           </SelectContent>
         </Select>
-
         {errors?.category?.message && (
           <InputError error={errors.category.message} />
         )}
       </div>
 
+      {/* Image Upload */}
       <div className="w-full space-y-2">
-        <Label htmlFor="featured_image" className="text-foreground dark:text-muted-foreground">Featured Image</Label>
+        <Label htmlFor="featured_image" className="text-gray-800 dark:text-gray-300">
+          Featured Image
+        </Label>
         <Input
           type="file"
           id="picture"
           {...register("featured_image", {
             required: blog ? false : "Blog's featured image is required",
           })}
-          className="w-full file:text-primary file:hover:opacity-80"
+          className="w-full bg-gray-50 dark:bg-[#2a2a2a] border border-gray-300 dark:border-gray-600 
+          text-gray-900 dark:text-gray-100 file:text-primary hover:file:opacity-80 rounded-lg"
         />
-
         {errors?.featured_image?.message && (
           <InputError error={errors.featured_image.message} />
         )}
       </div>
 
+      {/* Submit Button */}
       <div className="w-full flex items-center justify-center flex-col my-4">
         {blog ? (
           <button
             disabled={updateMutation.isPending}
-            className="w-full inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground shadow-md hover:bg-primary/90 h-10 px-4 py-2"
+            className="w-full inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium 
+            bg-blue-600 dark:bg-blue-500 text-white hover:bg-blue-700 dark:hover:bg-blue-600 shadow-md 
+            h-10 px-4 py-2 transition-colors duration-300"
           >
             {updateMutation.isPending ? (
               <>
@@ -230,7 +254,9 @@ const CreatePostPage = ({ blog, isAuthenticated }) => {
         ) : (
           <button
             disabled={mutation.isPending}
-            className="w-full inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground shadow-md hover:bg-primary/90 h-10 px-4 py-2"
+            className="w-full inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium 
+            bg-green-600 dark:bg-green-500 text-white hover:bg-green-700 dark:hover:bg-green-600 shadow-md 
+            h-10 px-4 py-2 transition-colors duration-300"
           >
             {mutation.isPending ? (
               <>

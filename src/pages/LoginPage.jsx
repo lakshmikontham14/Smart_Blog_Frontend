@@ -43,7 +43,8 @@ const LoginPage = ({setIsAuthenticated, setUsername}) => {
         {/* Left Section - Image Side */}
         <div className="hidden lg:flex w-1/2 bg-gradient-to-br from-[#0a0a2a] to-[#0a0a2a] p-8 items-center justify-center flex-col text-white">
           <div className="text-left w-full">
-            <h2 className="text-2xl font-bold mb-2">BALA.</h2>
+            <h2 className="text-2xl font-bold mb-2">DevScribe
+            </h2>
           </div>
           <div className="flex flex-col items-center justify-center h-full">
             <h1 className="text-5xl italic font-bold mb-4">Login page</h1>
@@ -89,12 +90,6 @@ const LoginPage = ({setIsAuthenticated, setUsername}) => {
                 {...register("password", { required: "Password is required" })}
                 className="w-full border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md shadow-sm pr-10"
               />
-              <button
-                type="button"
-                className="absolute inset-y-0 right-0 flex items-center pr-3 pt-6 text-sm leading-5 font-medium text-blue-600 hover:text-blue-500 focus:outline-none transition duration-150 ease-in-out"
-              >
-                Forgot ?
-              </button>
               {errors?.password?.message && (
                 <InputError error={errors.password.message} />
               )}
